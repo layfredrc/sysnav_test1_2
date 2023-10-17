@@ -1,0 +1,5 @@
+export { ReactComponent as CheckIcon } from './check.svg'
+export { ReactComponent as FlagIcon } from './flag.svg'
+export { ReactComponent as FolderIcon } from './folder-open.svg'
+export { ReactComponent as PinIcon } from './location-marker.svg'
+export { ReactComponent as CloseIcon } from './x.svg'

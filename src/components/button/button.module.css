@@ -1,0 +1,33 @@
+.main {
+  cursor: pointer;
+  user-select: none;
+
+  display: inline-flex;
+  flex-direction: row;
+  column-gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+
+  margin: 0;
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
+
+  font-family: inherit;
+  font-size: inherit;
+  font-size: var(--font-action-size);
+  font-weight: inherit;
+  font-weight: var(--font-action-weight);
+  line-height: inherit;
+  line-height: var(--font-action-height);
+  color: inherit;
+  color: var(--color-text-inverse);
+  text-align: inherit;
+  text-transform: none;
+  white-space: nowrap;
+
+  appearance: button;
+  background-color: var(--color-action);
+  border: none;
+  border-radius: 6px;
+  box-shadow: var(--shadow);
+}

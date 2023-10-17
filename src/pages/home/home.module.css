@@ -1,0 +1,19 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  column-gap: 2rem;
+
+  block-size: 100vh;
+  padding: 2rem;
+}
+
+.main > :not(.side) {
+  flex: 1;
+}
+
+.main .side {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
+  inline-size: 300px;
+}
