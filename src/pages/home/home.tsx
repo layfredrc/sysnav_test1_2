@@ -4,6 +4,7 @@ import { FilePicker } from 'views'
 import style from './home.module.css'
 import { useState } from 'react'
 import { FileInput } from 'models'
+import MapsView from 'components/maps/mapsView'
 
 export const Home = (): JSX.Element => {
   const [currentTrajectory, setCurrentTrajectory] = useState<FileInput | null>(
@@ -15,7 +16,9 @@ export const Home = (): JSX.Element => {
       <div className={style.side}>
         <FilePicker setCurrentTrajectory={setCurrentTrajectory} />
       </div>
-      <Card>MAP VIEW GOES HERE</Card>
+      <Card>
+        <MapsView currentTrajectory={currentTrajectory} />
+      </Card>
     </div>
   )
 }
