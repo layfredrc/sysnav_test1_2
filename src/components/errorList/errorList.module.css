@@ -1,0 +1,23 @@
+.container {
+  padding: 5%;
+  font-weight: var(--font-weight);
+
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-action);
+  border-radius: 6px;
+
+  position: absolute;
+  bottom: 0;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin: 10px 0;
+}
+
+.error {
+  color: var(--color-danger);
+  font-size: var(--font-action-size);
+}

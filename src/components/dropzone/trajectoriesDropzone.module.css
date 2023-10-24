@@ -1,0 +1,19 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 86.5vh;
+  background-color: var(--color-bg);
+  border: 2px solid var(--color-action);
+  border-radius: 6px;
+  border-style: dashed;
+  color: var(--color-action);
+  font-weight: var(--font-action-weight);
+  font-size: var(--font-action-size);
+}
+
+.icon {
+  color: var(--color-action);
+  transform: scale(1.5);
+}

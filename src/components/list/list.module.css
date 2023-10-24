@@ -1,0 +1,46 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 16px;
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  line-height: 14px;
+}
+
+.item p {
+  font-weight: var(--font-action-weight);
+}
+
+.left {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  gap: 0.8rem;
+}
+.selected p {
+  color: var(--color-action);
+}
+
+.circle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid var(--color-action);
+}
+
+.selected .circle {
+  background-color: var(--color-action);
+}
+
+.check {
+  fill: white;
+}
