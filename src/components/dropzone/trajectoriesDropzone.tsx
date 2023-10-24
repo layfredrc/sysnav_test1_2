@@ -2,13 +2,17 @@ import Dropzone from 'react-dropzone'
 import style from './trajectoriesDropzone.module.css'
 import { DropIcon } from 'assets/icons/large'
 import { FileInput } from 'models'
+import { FileValidator } from '@types'
+import FileValidationUtils from 'utils/FileValidationUtils'
+
+const { isValidJsonFile } = FileValidationUtils
 
 interface TrajectoriesDropzonePropsType {
-  handleSetFilesInput: (files: FileInput[]) => void
+  handleFiles: (filesContent: FileInput[]) => void
 }
 
 export default function TrajectoriesDropzone({
-  handleSetFilesInput,
+  handleFiles,
 }: TrajectoriesDropzonePropsType): JSX.Element {
   const onDrop = (acceptedFiles: File[]): void => {
     // Use Promise.all to wait for all files to be read before calling handleSetFilesInput
@@ -39,7 +43,7 @@ export default function TrajectoriesDropzone({
 
     Promise.all(filePromises)
       .then((files) => {
-        handleSetFilesInput(files)
+        handleFiles(files)
       })
       .catch((error) => {
         console.error('Error reading files:', error)

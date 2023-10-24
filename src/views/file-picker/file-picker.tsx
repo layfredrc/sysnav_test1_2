@@ -7,38 +7,9 @@ import { useEffect, useState } from 'react'
 import { useFilePicker } from 'use-file-picker'
 import { FileValidator } from '@types'
 import ErrorList from 'components/errorList/errorList'
+import FileValidationUtils from 'utils/FileValidationUtils'
 
-const isValidJsonFile = (file: FileInput, content: string): FileValidator => {
-  const fileExtension = file.name.split('.').pop()?.toLowerCase()
-  if (fileExtension !== 'json')
-    return {
-      isValid: false,
-      errorMessage: 'Invalid file format',
-      fileName: file.name,
-    }
-
-  try {
-    JSON.parse(content)
-    return {
-      isValid: true,
-      fileName: file.name,
-    }
-  } catch (error) {
-    let errorMessage: string
-
-    if (error instanceof Error) {
-      errorMessage = error.message
-    } else {
-      errorMessage = 'An unexpected error occurred.'
-    }
-
-    return {
-      isValid: false,
-      errorMessage,
-      fileName: file.name,
-    }
-  }
-}
+const { isValidJsonFile } = FileValidationUtils
 
 export const FilePicker = (): JSX.Element => {
   const [fileErrors, setFileErrors] = useState<FileValidator[]>([])
@@ -46,32 +17,39 @@ export const FilePicker = (): JSX.Element => {
   const [currentTrajectory, setCurrentTrajectory] = useState<FileInput | null>(
     null,
   )
+
+  const handleFiles = (filesContent: FileInput[]) => {
+    const validationResults = filesContent.map((file: FileInput) =>
+      isValidJsonFile(file, file.content as string),
+    )
+
+    const validFiles = filesContent.filter(
+      (file: FileInput, index: number) => validationResults[index].isValid,
+    )
+
+    setFileErrors((prevErrors) => {
+      const filteredErrors = prevErrors.filter(
+        (error) => !filesContent.some((file) => file.name === error.fileName),
+      )
+      return [
+        ...filteredErrors,
+        ...validationResults.filter((res: FileValidator) => !res.isValid),
+      ]
+    })
+
+    setFilesInput((prevFiles: FileInput[]) => {
+      const newFiles = validFiles.filter(
+        (file: FileInput) =>
+          !prevFiles.some((existingFile) => existingFile.name === file.name),
+      )
+      return [...prevFiles, ...newFiles]
+    })
+  }
+
   const { openFilePicker } = useFilePicker({
     accept: '.json',
     multiple: true,
-    onFilesSelected: ({ filesContent }) => {
-      const validationResults = filesContent.map((file: FileInput) =>
-        isValidJsonFile(file, file.content as string),
-      )
-
-      const validFiles = filesContent.filter(
-        (file: FileInput, index: string | number) =>
-          validationResults[index].isValid,
-      )
-
-      setFileErrors((prevErrors) => [
-        ...prevErrors,
-        ...validationResults.filter((res: FileValidator) => !res.isValid),
-      ])
-
-      setFilesInput((prevFiles: FileInput[]) => {
-        const newFiles = validFiles.filter(
-          (file: FileInput) =>
-            !prevFiles.some((existingFile) => existingFile.name === file.name),
-        )
-        return [...prevFiles, ...newFiles]
-      })
-    },
+    onFilesSelected: ({ filesContent }) => handleFiles(filesContent),
   })
 
   const handleSetCurrentTrajectory = (file: FileInput): void => {
@@ -82,6 +60,12 @@ export const FilePicker = (): JSX.Element => {
     setFilesInput(filesInput.filter((file) => file.name !== name))
   }
 
+  useEffect(() => {
+    if (filesInput.length === 0) {
+      setFileErrors([])
+    }
+  }, [filesInput])
+
   return (
     <>
       <Button onClick={openFilePicker}>
@@ -90,7 +74,7 @@ export const FilePicker = (): JSX.Element => {
       </Button>
 
       {filesInput.length <= 0 ? (
-        <TrajectoriesDropzone handleSetFilesInput={setFilesInput} />
+        <TrajectoriesDropzone handleFiles={handleFiles} />
       ) : (
         <Card>
           <List
