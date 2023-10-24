@@ -6,19 +6,20 @@ import { useState } from 'react'
 interface ListPropsTypes {
   filesInput: FileInput[]
   handleRemoveFileInput: (name: string) => void
-  handleSetCurrentTrajectory: (file: FileInput) => void
+  setCurrentTrajectory: (file: FileInput) => void
 }
 
 export default function List({
   filesInput,
   handleRemoveFileInput,
-  handleSetCurrentTrajectory,
+  setCurrentTrajectory,
 }: ListPropsTypes): JSX.Element {
   const [clickedItem, setClickedItem] = useState<string | null>(null)
 
   const handleSelectCurrentTrajectory = (name: string): void => {
     setClickedItem(name)
-    handleSetCurrentTrajectory(filesInput.find((file) => file.name === name)!)
+    setCurrentTrajectory(filesInput.find((file) => file.name === name)!)
+    console.log(filesInput.find((file) => file.name === name)!)
   }
 
   return (

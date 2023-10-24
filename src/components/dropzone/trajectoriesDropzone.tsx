@@ -2,7 +2,6 @@ import Dropzone from 'react-dropzone'
 import style from './trajectoriesDropzone.module.css'
 import { DropIcon } from 'assets/icons/large'
 import { FileInput } from 'models'
-import { FileValidator } from '@types'
 import FileValidationUtils from 'utils/FileValidationUtils'
 
 const { isValidJsonFile } = FileValidationUtils

@@ -11,12 +11,15 @@ import FileValidationUtils from 'utils/FileValidationUtils'
 
 const { isValidJsonFile } = FileValidationUtils
 
-export const FilePicker = (): JSX.Element => {
+interface FilePickerPropsType {
+  setCurrentTrajectory: (file: FileInput) => void
+}
+
+export const FilePicker = ({
+  setCurrentTrajectory,
+}: FilePickerPropsType): JSX.Element => {
   const [fileErrors, setFileErrors] = useState<FileValidator[]>([])
   const [filesInput, setFilesInput] = useState<FileInput[]>([])
-  const [currentTrajectory, setCurrentTrajectory] = useState<FileInput | null>(
-    null,
-  )
 
   const handleFiles = (filesContent: FileInput[]) => {
     const validationResults = filesContent.map((file: FileInput) =>
@@ -52,10 +55,6 @@ export const FilePicker = (): JSX.Element => {
     onFilesSelected: ({ filesContent }) => handleFiles(filesContent),
   })
 
-  const handleSetCurrentTrajectory = (file: FileInput): void => {
-    setCurrentTrajectory(file)
-  }
-
   const handleRemoveFileInput = (name: string): void => {
     setFilesInput(filesInput.filter((file) => file.name !== name))
   }
@@ -80,7 +79,7 @@ export const FilePicker = (): JSX.Element => {
           <List
             filesInput={filesInput}
             handleRemoveFileInput={handleRemoveFileInput}
-            handleSetCurrentTrajectory={handleSetCurrentTrajectory}
+            setCurrentTrajectory={setCurrentTrajectory}
           />
         </Card>
       )}
