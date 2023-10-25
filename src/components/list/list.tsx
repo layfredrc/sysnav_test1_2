@@ -19,7 +19,6 @@ export default function List({
   const handleSelectCurrentTrajectory = (name: string): void => {
     setClickedItem(name)
     setCurrentTrajectory(filesInput.find((file) => file.name === name)!)
-    console.log(filesInput.find((file) => file.name === name)!)
   }
 
   return (
