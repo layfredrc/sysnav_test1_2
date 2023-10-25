@@ -3,7 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 86.5vh;
+  height: 85vh;
   background-color: var(--color-bg);
   border: 2px solid var(--color-action);
   border-radius: 6px;
